@@ -1,0 +1,18 @@
+
+-- Création de la table 'Produkte' pour stocker les informations sur les produits
+CREATE TABLE Produkte (
+    ProduktID INT AUTO_INCREMENT PRIMARY KEY,
+    Titel VARCHAR(255) NOT NULL,
+    Preis DECIMAL(10,2) NOT NULL,
+    Lagerbestand INT NOT NULL,
+    Lieferzeit INT NOT NULL,
+    KategorieID INT NOT NULL,
+    Dateiname VARCHAR(255) NOT NULL,
+    FOREIGN KEY (KategorieID) REFERENCES Kategorie(KategorieID)
+);
+
+-- Création de la table 'Kategorie' pour stocker les informations sur les catégories
+CREATE TABLE Kategorie (
+    KategorieID INT AUTO_INCREMENT PRIMARY KEY,
+    KategorieName VARCHAR(50) NOT NULL
+);
