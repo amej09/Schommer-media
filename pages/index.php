@@ -16,13 +16,35 @@ require 'functions.php';
 <body>
 
     <div id="left-section">
-        <h2>Moteur de Recherche</h2>
-        <!-- Ajoutez ici votre formulaire de recherche -->
+
+        <form method="GET" name="Filter">
+             <input type="search" name="search"  value="<?=$_GET['search'] ?? "" ?>" placeholder="Suche.."/>
+             <button type="submit">Suche</button>
+             <h3>Kategorien</h3>
+             <?php 
+            foreach ($Allkategorys as $Kat){?>
+             <label>
+             <input type="checkbox" name="Kategory[]" value="<?= $Kat['KategorieID']?>" 
+             <?=  in_array($Kat['KategorieID'] , $_GET['Kategory'] ?? [] ) ?   "checked='checked'" :  "";
+             ?> />
+             <?php echo  $Kat["KategorieName"] ?>
+             </label> <br>
+              <?php }  
+              
+              ?>
+            <select name="price-filter">
+               
+                <option value ="0" <?= (( $_GET['price-filter'] ?? '') =='0' ) ?    "selected" :  ""?>>Preisspanne wählen</option>
+                <option value ="1" <?= ( ( $_GET['price-filter'] ?? '')=='1' ) ?   "selected" :  ""?>>0 $ - 50 $</option>
+                <option value ="2" <?= ( ( $_GET['price-filter'] ?? '')  =='2' ) ?   "selected" :  ""?>>50 $ - 100 $</option>
+                <option value ="3" <?= (( $_GET['price-filter'] ?? '') =='3' ) ?   "selected" :  ""?>>100 $ - 200 $</option>
+                <option value ="4" <?= (( $_GET['price-filter'] ?? '') =='4' ) ?   "selected" :  ""?>>200 $ und mehr</option>
+            </select>
+        </form>
+        
     </div>
 
     <div id="right-section">
-        <h2>Liste des Produits</h2>
-
         <div class="product-cards">
             <?php
                 // Afficher les produits
@@ -57,9 +79,16 @@ require 'functions.php';
 
         <div class="pagination-container pagination">
                 <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                    <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
-                    <a href="?page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
-                <?php endfor; ?>
+                    <?php $activeClass = ($i == $page) ? 'active' : ''; 
+                    if(isset($_GET['search']) || isset($_GET['Kategory']) ){?>
+
+                    <a  href="<?=$_SERVER['REQUEST_URI'] ?>&page=<?= $i;?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                    <?php
+                    }else{?>
+                        <a  href="?page=<?= $i;?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+
+                    <?php }
+                    endfor; ?>
         </div>
     </div>
 

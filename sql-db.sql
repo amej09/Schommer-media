@@ -6,9 +6,7 @@ CREATE TABLE Produkte (
     Preis DECIMAL(10,2) NOT NULL,
     Lagerbestand INT NOT NULL,
     Lieferzeit INT NOT NULL,
-    KategorieID INT NOT NULL,
     Dateiname VARCHAR(255) NOT NULL,
-    FOREIGN KEY (KategorieID) REFERENCES Kategorie(KategorieID)
 );
 
 -- Création de la table 'Kategorie' pour stocker les informations sur les catégories
@@ -17,5 +15,11 @@ CREATE TABLE Kategorie (
     KategorieName VARCHAR(50) NOT NULL
 );
 
-$mysqli = new mysqli("localhost", "root", "", "db-schommer");
-$mysqli->set_charset("utf8")
+CREATE TABLE ProdukteKategory(
+    ProduktID INT,
+    KategorieID INT ,
+    PRIMARY KEY (ProduktID ,KategorieID),
+    FOREIGN KEY (ProduktID) REFERENCES Produkte(ProduktID),
+    FOREIGN KEY (KategorieID) REFERENCES Kategorie(KategorieID),
+    
+)

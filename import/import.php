@@ -1,13 +1,6 @@
 <?php
 
-// Assurez-vous d'avoir une connexion à la base de données ici*
-$conn = new mysqli("localhost", "root", "", "db-schommer");
-
-// Vérifiez la connexion
-if ($conn->connect_error) {
-    die("La connexion à la base de données a échoué : " . $conn->connect_error);
-}
-
+include '../db.php';
 // Fonction pour ajouter une catégorie à la base de données
 function addCategory($conn, $categoryName) {
     // Vérifier si la catégorie existe déjà
@@ -26,13 +19,29 @@ function addCategory($conn, $categoryName) {
     }
 }
 
+ 
 // Fonction pour ajouter un produit à la base de données
-function addProduct($conn, $title, $price, $stock, $deliveryTime, $categoryID, $image_path) {
-    $sql = "INSERT INTO Produkte (Titel, Preis, Lagerbestand, Lieferzeit, KategorieID, Dateiname)
-            VALUES ('$title', $price, $stock, $deliveryTime, $categoryID, '$image_path')";
+function addProduct($conn, $title, $price, $stock, $deliveryTime, $image_path) {
+    // Vérifier si la catégorie existe déjà
+    $checkSql = "SELECT ProduktID FROM produkte WHERE Titel = '$title'";
+    $result = $conn->query($checkSql);
+
+    if ($result->num_rows > 0) {
+        // La catégorie existe déjà, retourner l'ID de la catégorie existante
+        $row = $result->fetch_assoc();
+        return $row['ProduktID'];
+    } else {
+            $sql = "INSERT INTO produkte(Titel, Preis, Lagerbestand, Lieferzeit, Dateiname) VALUES
+            ('$title', $price, $stock, $deliveryTime, '$image_path')";
+            $conn->query($sql);
+            return $conn->insert_id;
+    }
+
+}
+function addProductCategory($conn,$productID, $categoryID){
+    $sql="INSERT INTO produktekategory(ProduktID,KategorieID) VALUES ($productID,$categoryID)";
     $conn->query($sql);
 }
-
 // Fonction pour importer les données du fichier CSV
 function importCSV($conn, $file_path)
 {
@@ -43,6 +52,7 @@ function importCSV($conn, $file_path)
 
     if ($csv_file !== false) {
         while (($data = fgetcsv($csv_file, 1000, ';')) !== false) {
+            $data= array_map("utf8_encode",$data);
             // Ignorer la première ligne
             if ($is_first_line) {
                 $is_first_line = false;
@@ -59,7 +69,8 @@ function importCSV($conn, $file_path)
 
             // Appelez la fonction d'ajout de produit
             $category_id = addCategory($conn, $category_name);
-            addProduct($conn, $title, $price, $stock, $delivery_time, $category_id, $image_path);
+            $product_id=addProduct($conn, $title, $price, $stock, $delivery_time, $image_path);
+            addProductCategory($conn,$product_id,$category_id);
         }
 
         fclose($csv_file);

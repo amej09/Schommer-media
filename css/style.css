@@ -33,8 +33,6 @@ body {
 .product-card {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
     width: calc(33.33% - 20px);
     box-sizing: border-box;
     text-align: center;
@@ -43,14 +41,17 @@ body {
 .product-card img {
     max-width: 100%;
     height: auto;
-    margin-bottom: 10px;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
 }
 .product-info{
     text-align: left;
 }
 .product-price{
 color: rgb(106, 215, 106);
- 
+padding-top: 10px;
+padding-bottom: 15px;
 }
 .pagination-container {
     position: relative;
@@ -63,7 +64,7 @@ color: rgb(106, 215, 106);
 .pagination {
     display: flex;
     list-style: none;
-    padding: 10px 0;
+    margin-top: 50px;
     justify-content: center;
 }
 
@@ -88,14 +89,11 @@ color: rgb(106, 215, 106);
 
 .out-of-stock-text {
     position: relative;
-
-    
     color: red;
     font-weight: bold;
     text-align: center;
     z-index: 1;
 }
-
 
 
 
