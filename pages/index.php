@@ -1,32 +1,7 @@
 <?php
-// Connectez-vous à votre base de données et effectuez la requête pour récupérer les produits
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "db-schommer";
+include '../db.php';
+require 'functions.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion à la base de données
-if ($conn->connect_error) {
-    die("La connexion à la base de données a échoué : " . $conn->connect_error);
-}
-
-// Pagination
-$limit = 6; // Nombre de produits par page
-$page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-// Requête pour récupérer les produits avec pagination
-$sql = "SELECT * FROM Produkte LIMIT $offset, $limit";
-$result = $conn->query($sql);
-
-// Récupérer le nombre total de produits pour la pagination
-$totalProducts = $conn->query("SELECT COUNT(*) as total FROM Produkte")->fetch_assoc()['total'];
-$totalPages = ceil($totalProducts / $limit);
-
-// Fermer la connexion à la base de données
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -35,66 +10,58 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Produits</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+    <link rel="stylesheet" href="../css/style.css">
 
-        .product-card {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            width: 200px;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-        }
-
-        .pagination li {
-            margin-right: 5px;
-        }
-
-        .pagination a {
-            text-decoration: none;
-            padding: 5px 10px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 3px;
-        }
-    </style>
 </head>
 <body>
 
-    <h2>Liste des Produits</h2>
+    <div id="left-section">
+        <h2>Moteur de Recherche</h2>
+        <!-- Ajoutez ici votre formulaire de recherche -->
+    </div>
 
-    <?php
-    // Afficher les produits
-    while ($row = $result->fetch_assoc()) {
-        echo '<div class="product-card">';
-        echo '<h3>' . $row['Titel'] . '</h3>';
-        echo '<p>Prix: ' . $row['Preis'] . ' €</p>';
-        echo '<img src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
-        echo '</div>';
-    }
-    ?>
+    <div id="right-section">
+        <h2>Liste des Produits</h2>
 
-    <!-- Pagination -->
-    <ul class="pagination">
-        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-            <li><a href="?page=<?= $i; ?>"><?= $i; ?></a></li>
-        <?php endfor; ?>
-    </ul>
+        <div class="product-cards">
+            <?php
+                // Afficher les produits
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="product-card">';
+                
+                    // Vérifier si le stock est égal à zéro
+                    if ($row['Lagerbestand'] == 0) {
+                        echo '<div class="product-info">';
+                        echo '<h3 class="product-title">' . $row['Titel'] . '</h3>';
+                        echo '<p class="product-price">' . $row['Preis'] . ' €</p>';
+                        echo '</div>';
+                        echo '<div class="out-of-stock">';
+                        echo '<img src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '" class="out-of-stock-image">';
+                        echo '</div>';
+                        echo '<div class="out-of-stock-text">nicht mehr auf Lager!</div>';
+
+                    } else {
+                        echo '<div class="product-info">';
+                        echo '<h3 class="product-title">' . $row['Titel'] . '</h3>';
+                        echo '<p class="product-price">' . $row['Preis'] . ' €</p>';
+                        echo '</div>';
+                        echo '<img src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '" class="product-image">';
+                     
+                    }
+                
+                    echo '</div>';
+                }
+           ?>
+           
+        </div>
+
+        <div class="pagination-container pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                    <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
+                    <a href="?page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                <?php endfor; ?>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -16,3 +16,6 @@ CREATE TABLE Kategorie (
     KategorieID INT AUTO_INCREMENT PRIMARY KEY,
     KategorieName VARCHAR(50) NOT NULL
 );
+
+$mysqli = new mysqli("localhost", "root", "", "db-schommer");
+$mysqli->set_charset("utf8")
