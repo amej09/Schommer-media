@@ -61,7 +61,12 @@ function importCSV($conn, $file_path)
 
             // Ajoutez ici la logique pour insérer les données dans la base de données
             $title = $data[0];
-            $price = floatval(str_replace('€', '', $data[1]));
+            // Supprimer le point
+            $prixSansPoint = str_replace('.', '', $data[1]);
+
+            // Convertir en nombre (virgule flottante)
+            $price = floatval($prixSansPoint);
+           // $price = $data[1];
             $stock = intval($data[2]);
             $delivery_time = intval($data[3]);
             $category_name = $data[4];

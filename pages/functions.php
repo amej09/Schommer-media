@@ -1,7 +1,4 @@
 <?php 
-
-
-
   // Pagination
   $limit = 6; // Nombre de produits par page
   $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
@@ -60,23 +57,13 @@
         $totalPages = ceil($totalProducts / $limit);
     }else{
         // Requête pour récupérer les produits avec pagination
-    $sql = "SELECT * FROM Produkte LIMIT $offset, $limit";
-    $result = $conn->query($sql);
-    $sql2 = "SELECT * FROM Produkte ";
-    $result2 = $conn->query($sql2);
-    $totalProducts = $result2->num_rows ;
-    $totalPages = ceil($totalProducts / $limit);
+        $sql = "SELECT * FROM Produkte LIMIT $offset, $limit";
+        $result = $conn->query($sql);
+        $sql2 = "SELECT * FROM Produkte ";
+        $result2 = $conn->query($sql2);
+        $totalProducts = $result2->num_rows ;
+        $totalPages = ceil($totalProducts / $limit);
     }
- 
- 
-
-
-
-
-
-    // Récupérer le nombre total de produits pour la pagination
-    
-  
 
 $conn->close();
 
