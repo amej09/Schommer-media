@@ -7,7 +7,7 @@
   // Requête pour récupérer les kategorys
 
   $sql = "SELECT * FROM kategorie  "; 
-    $Allkategorys = $conn->query($sql);
+  $Allkategorys = $conn->query($sql);
 
 
     if(isset($_GET['search'] )|| isset($_GET['Kategory'])|| isset($_GET['price-filter'] )){

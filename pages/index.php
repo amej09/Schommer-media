@@ -38,13 +38,18 @@ require 'functions.php';
                     
                     ?>
              </div>
-            <select name="price-filter" onchange="submit()">
-                <option value ="0" <?= (( $_GET['price-filter'] ?? '') =='0' ) ?    "selected" :  ""?>>Preisspanne wählen</option>
-                <option value ="1" <?= ( ( $_GET['price-filter'] ?? '')=='1' ) ?   "selected" :  ""?>>0 $ - 50 $</option>
-                <option value ="2" <?= ( ( $_GET['price-filter'] ?? '')  =='2' ) ?   "selected" :  ""?>>50 $ - 100 $</option>
-                <option value ="3" <?= (( $_GET['price-filter'] ?? '') =='3' ) ?   "selected" :  ""?>>100 $ - 200 $</option>
-                <option value ="4" <?= (( $_GET['price-filter'] ?? '') =='4' ) ?   "selected" :  ""?>>200 $ und mehr</option>
-            </select>
+             <div class="Preis">
+
+                <h3>Preis</h3>
+                <select name="price-filter" onchange="submit()">
+                    <option value ="0" <?= (( $_GET['price-filter'] ?? '') =='0' ) ?    "selected" :  ""?>>Preisspanne wählen</option>
+                    <option value ="1" <?= ( ( $_GET['price-filter'] ?? '')=='1' ) ?   "selected" :  ""?>>0 $ - 50 $</option>
+                    <option value ="2" <?= ( ( $_GET['price-filter'] ?? '')  =='2' ) ?   "selected" :  ""?>>50 $ - 100 $</option>
+                    <option value ="3" <?= (( $_GET['price-filter'] ?? '') =='3' ) ?   "selected" :  ""?>>100 $ - 200 $</option>
+                    <option value ="4" <?= (( $_GET['price-filter'] ?? '') =='4' ) ?   "selected" :  ""?>>200 $ und mehr</option>
+                </select>
+            </div>
+
 
         </form>
         
@@ -55,7 +60,9 @@ require 'functions.php';
                 <?php
                     // Afficher les produits
                     while ($row = $result->fetch_assoc()) {
-                        echo '<div class="product-card">';
+                        
+                         echo '<a href="product-detaille.php?title='.$row['Titel'].'" >';
+                         echo '<div class="product-card">';
                     
                         // Vérifier si le stock est égal à zéro
                         if ($row['Lagerbestand'] == 0) {
@@ -64,7 +71,7 @@ require 'functions.php';
                                 echo '<p class="product-price">' . $row['Preis'] . ' €</p>';
                             echo '</div>';
                             echo '<div class="out-of-stock">';
-                                echo '<img class="out-of-stock-image" src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
+                                echo '<img  src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
                             echo '</div>';
                             echo '<div class="out-of-stock-text">nicht mehr auf Lager!</div>';
 
@@ -81,23 +88,43 @@ require 'functions.php';
                         }
                     
                         echo '</div>';
+                        echo '<a/>';
+
                     }
                 ?>
             </div>
 
 
-        <div class="pagination-container pagination">
-                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                <?php $activeClass = ($i == $page) ? 'active' : ''; 
-                if(isset($_GET['search']) || isset($_GET['Kategory']) ){?>
-
-                <a  href="<?=$_SERVER['REQUEST_URI'] ?>&page=<?= $i;?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+        <div class=" pagination">
+            <?php
+                $previousPage = ($page > 1) ? $page - 1 : 1;
+                $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
+            ?>
+            
+            <?php if ($page > 1) : ?>
                 <?php
-                }else{?>
-                    <a  href="?page=<?= $i;?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                $previousLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $previousPage : '?page=' . $previousPage;
+                ?>
+                <a href="<?= $previousLink; ?>"><</a>
+            <?php endif; ?>
 
-                <?php }
-                endfor; ?>
+            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
+                <?php if (isset($_GET['search']) || isset($_GET['Kategory'])) : ?>
+                    <a href="<?= $_SERVER['REQUEST_URI'] ?>&page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                <?php else : ?>
+                    <a href="?page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages) : ?>
+                <?php
+                $nextLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $nextPage : '?page=' . $nextPage;
+                ?>
+                <a href="<?= $nextLink; ?>">></a>
+            <?php endif; ?>
+
+
         </div>
     </div>
     <script>
