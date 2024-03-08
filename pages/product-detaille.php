@@ -23,10 +23,11 @@ require 'functions.php';
     ?>
   <div class="container">
     <div class="product">
-        <?php echo '<p class="titel-top titel">'. $productdetaille['Titel'] .'</p> '?> 
+        <div class="image">
+          <?php echo '<p class="titel-top titel">'. $productdetaille['Titel'] .'</p> '?> 
 
-        <?php echo '<img  src="../images/alle_produkte/' . $productdetaille['Dateiname'] . '" alt="' . $productdetaille['Titel'] . '">';?>
-        
+          <?php echo '<img  src="../images/alle_produkte/' . $productdetaille['Dateiname'] . '" alt="' . $productdetaille['Titel'] . '">';?>
+        </div>       
         <div class="product-info">
             <H2 class="donne-green">Preis</H2>
             <?php echo '<H1 class="product-donne">'. $productdetaille['Preis'] .' € </H1> '?> 
