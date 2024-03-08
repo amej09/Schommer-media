@@ -21,9 +21,8 @@ require 'functions.php';
   <?php 
     if(isset($_GET['productdetaille']) && $_GET['productdetaille']!="" ){
     ?>
-  <div class="container">
-    <div class="product">
-        <div class="image">
+  <div class="container product">
+         <div class="image">
           <?php echo '<p class="titel-top titel">'. $productdetaille['Titel'] .'</p> '?> 
 
           <?php echo '<img  src="../images/alle_produkte/' . $productdetaille['Dateiname'] . '" alt="' . $productdetaille['Titel'] . '">';?>
@@ -38,8 +37,7 @@ require 'functions.php';
             <button src ="#" class="button-kaufen donne">Kaufen</button>
 
         </div>
-    </div>  
-
+ 
   </div>    
   <?php }?>
   <p class="header titel">Ähnliche Suchvorschläge</p>
