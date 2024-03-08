@@ -65,6 +65,56 @@
         $totalPages = ceil($totalProducts / $limit);
     }
 
+
+
+
+
+    //page products detailles 
+    if(isset($_GET['productdetaille']) && $_GET['productdetaille']!="" ){
+        $sql = "SELECT * FROM Produkte WHERE ProduktID=".$_GET['productdetaille'];
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();   
+        $result = $stmt->get_result();
+    
+        $productdetaille = $result->fetch_assoc();
+        //lieferzeit
+        $lieferzeit = $productdetaille['Lieferzeit'];
+        $Heute =new DateTime();
+
+        //Anzahl der Tage
+        $Heute->add(new dateInterval('P'.$lieferzeit.'D'));
+        
+        // Formater la date pour l'affichage
+        $formatter = new IntlDateFormatter('de_DE', IntlDateFormatter::FULL, IntlDateFormatter::NONE, 'Europe/Berlin', IntlDateFormatter::GREGORIAN, 'EEEE d MMMM');
+        $jourLivraison = $formatter->format($Heute->getTimestamp()); // Nom du jour de la semaine en allemand
+        $lieferzeit=$jourLivraison ;
+        
+
+        //lagerbestand
+        if($productdetaille['Lagerbestand']==7){
+            $lagerbestand = '<H1 class="product-donne"> Nur noch 7 Stück Auf Lager  </H1>'; 
+          }
+        else if($productdetaille['Lagerbestand']<7 && $productdetaille['Lagerbestand']!=0)  {
+            $lagerbestand = '<H1 class="product-donne"> weniger als 7 Stück Auf Lager   </H1>'; 
+
+
+        }else if($productdetaille['Lagerbestand']>7){
+            $lagerbestand = '<H1 class="product-donne"> Auf Lager  </H1>'; 
+
+
+        } 
+        else{
+            $lagerbestand = '<H1 class="product-donne-red"> AKtuell nicht auf Lager !   </H1>'; 
+
+
+          }
+
+    
+    }
+
+    
+
 $conn->close();
 
 ?>

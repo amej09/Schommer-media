@@ -7,6 +7,28 @@
 body {
     display: flex;
     position: relative;
+    font-family:'Montserrat',sans-serif;
+
+}
+.product-title{
+    font-weight: 400;
+    font-size: 25px;
+    line-height :30px;
+    color: #505050;
+
+    
+}
+.donne{
+    font-weight: 400;
+    font-size: 16px;
+    line-height :19px;
+    color: #505050;
+}
+.donne-green{
+    font-weight: 700;
+    font-size: 20px;
+    line-height :24px;
+    color: #AFD96F;
 }
 
 .sidebar {
@@ -39,7 +61,7 @@ body {
     right: 20px;
     transform: translateY(-50%);
 }
-.categories  h3 {
+.categories  H2 {
     color: #AFD96F;
     margin-bottom: 10px;
 }
@@ -69,7 +91,7 @@ body {
 .Preis {
     margin-top: 35px;
 }
-.Preis  h3 {
+.Preis  H2 {
     color: #AFD96F;
     margin-bottom: 10px;
 }
@@ -114,9 +136,8 @@ a{
 
 }
 
-.product-price {
-    color: #AFD96F;
-    padding-top: 10px;
+.product-price  {
+     padding-top: 10px;
     padding-bottom: 15px;
 }
 
@@ -154,8 +175,9 @@ a{
 .out-of-stock-text {
     position: absolute;
     color: #DF2727;
-    font-weight: bold;
-    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    line-height :24px;
     top:50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -183,31 +205,3 @@ select ,option{
     }
 }
 
-/*page detaille*/
-.grid-container {
-    display: grid;
-    gap: 10px;
-    padding: 10px;
-  }
-  
-  .grid-item {
-    text-align: center;
-    padding: 20px;
-    font-size: 30px;
-  }
-  
-  .item1 {
-    grid-column: 1 / span 2;
-    grid-row: 1;
-    text-align: left;
-  }
-  
-  .item2 {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-  }
-  
-  .item5 {
-    grid-column: 1 / span 3;
-    grid-row: 3;
-  }

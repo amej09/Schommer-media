@@ -11,7 +11,8 @@ require 'functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liste des Produits</title>
     <link rel="stylesheet" href="../css/style.css">
-
+    <link href="font/Montserrat/Montserrat-Regular.ttf" rel="stylesheet">
+    <link href="font/Montserrat/Montserrat-Bold.ttf" rel="stylesheet">
 </head>
 <body>
 
@@ -25,10 +26,10 @@ require 'functions.php';
 
             </div>
              <div class="categories">
-                <h3>Kategorien</h3>
+                <H2 class="donne-green">Kategorien</H2>
                     <?php 
                     foreach ($Allkategorys as $Kat){?>
-                    <label>
+                    <label class="donne">
                     <input type="checkbox" onclick="submit()" name="Kategory[]" value="<?= $Kat['KategorieID']?>" 
                     <?=  in_array($Kat['KategorieID'] , $_GET['Kategory'] ?? [] ) ?   "checked='checked'" :  "";
                     ?> />
@@ -40,8 +41,8 @@ require 'functions.php';
              </div>
              <div class="Preis">
 
-                <h3>Preis</h3>
-                <select name="price-filter" onchange="submit()">
+                <H2 class="donne-green" >Preis</H2>
+                <select name="price-filter" class="donne" onchange="submit()">
                     <option value ="0" <?= (( $_GET['price-filter'] ?? '') =='0' ) ?    "selected" :  ""?>>Preisspanne wählen</option>
                     <option value ="1" <?= ( ( $_GET['price-filter'] ?? '')=='1' ) ?   "selected" :  ""?>>0 $ - 50 $</option>
                     <option value ="2" <?= ( ( $_GET['price-filter'] ?? '')  =='2' ) ?   "selected" :  ""?>>50 $ - 100 $</option>
@@ -61,24 +62,24 @@ require 'functions.php';
                     // Afficher les produits
                     while ($row = $result->fetch_assoc()) {
                         
-                         echo '<a href="product-detaille.php?title='.$row['Titel'].'" >';
+                         echo '<a href="product-detaille.php?productdetaille='.$row['ProduktID'].'" >';
                          echo '<div class="product-card">';
                     
                         // Vérifier si le stock est égal à zéro
                         if ($row['Lagerbestand'] == 0) {
                             echo '<div class="product-info">';
-                                echo '<h3 class="product-title">' . $row['Titel'] . '</h3>';
-                                echo '<p class="product-price">' . $row['Preis'] . ' €</p>';
+                                echo '<H1 class="product-title">' . $row['Titel'] . '</H1>';
+                                echo '<H2 class="donne-green product-price">' . $row['Preis'] . ' €</H2>';
                             echo '</div>';
                             echo '<div class="out-of-stock">';
-                                echo '<img  src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
+                            echo '<img  src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
                             echo '</div>';
-                            echo '<div class="out-of-stock-text">nicht mehr auf Lager!</div>';
+                            echo '<H2 class="out-of-stock-text  ">nicht mehr </br> auf Lager!</H2>';
 
                         } else {
                             echo '<div class="product-info">';
-                            echo '<h3 class="product-title">' . $row['Titel'] . '</h3>';
-                            echo '<p class="product-price">' . $row['Preis'] . ' €</p>';
+                            echo '<H1 class="product-title">' . $row['Titel'] . '</H1>';
+                            echo '<H2 class="donne-green product-price">' . $row['Preis'] . ' €</H2>';
                             echo '</div>';
                             echo '<div class="product-img">';
                             echo '<img class="product-image" src="../images/alle_produkte/' . $row['Dateiname'] . '" alt="' . $row['Titel'] . '">';
