@@ -30,7 +30,9 @@ body {
     line-height :24px;
     color: #AFD96F;
 }
-
+.search{
+ border-color: #E1E1E1;
+}
 .sidebar {
     width: 250px;
     height: 100%;
@@ -68,12 +70,12 @@ body {
 
 .categories label {
     display: block;
-    margin-bottom: 10px;
-}
+    padding-top: 10px;}
 
-.categories input[type="checkbox"] {
+ 
+/*.categories input[type="checkbox"] {
     margin-right: 10px;
-}
+}*/
 
 .categories input[type="checkbox"]::before {
     display: block;
@@ -140,6 +142,13 @@ a{
      padding-top: 10px;
     padding-bottom: 15px;
 }
+.zoom{
+    transition: transform .3s; /* Animation */
+
+}
+.zoom img:hover{
+      transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
 
  
 
@@ -183,15 +192,179 @@ a{
     transform: translate(-50%,-50%);
 
 }
-select ,option{
+select{
     background-color: transparent;
-  border-color: transparent;
+    border-color: transparent;
+    transition: color 0.3s; /* Animation de la couleur du texte */
+
 }
+option{
+    background-color: white;
+    border-color: white;
+ 
+}
+
+/* checkbox icon intergration*/
+
+input[type="checkbox"] {
+    display: none; /* Masquer la case à cocher par défaut */
+}
+
+/* Style de l'icône */
+label img {
+    width: 15px;
+    height: 15px;
+    /* Autres styles d'icône */
+}
+.category-name{
+    margin-left: 10px;
+}
+/* Style de l'icône personnalisée lorsque la case à cocher est cochée */
+input[type="checkbox"]:checked + label .icon {
+    content: url("../images/grafiken/button_aktiv.svg"); /* Chemin vers l'icône active */
+}
+
+
+
+/*selectbox*/
+/** Custom Select **/
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+  }
+  .custom-select-wrapper select {
+    display: none;
+  }
+  .custom-select {
+    position: relative;
+    display: inline-block;
+    font: 13px/1.5 "Roboto", sans-serif;
+  }
+  .custom-select-trigger {
+    position: relative;
+    display: block;
+    min-width: 130px;
+    padding: 0 104px 0 25px;
+    font-weight: 100;
+    color: #6e7c83;
+    line-height: 50px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  .custom-select-trigger:hover {
+    -webkit-box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+    box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+  }
+  .custom-select-trigger:before {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 1px;
+    height: 50px;
+    top: 3px;
+    right: 50px;
+    margin-top: -3px;
+    border-right: 1px solid #c7d1d6;
+    transition: all 0.35s ease-out;
+    transform-origin: 50% 0;
+  }
+  .custom-select-trigger:after {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    right: 20px;
+    margin-top: -3px;
+    border-bottom: 1px solid #c7d1d6;
+    border-right: 1px solid #c7d1d6;
+    transform: rotate(45deg) translateY(-50%);
+    transition: all 0.35s ease-out;
+    transform-origin: 50% 0;
+  }
+  .custom-select.opened .custom-select-trigger:after {
+    margin-top: 3px;
+    transform: rotate(-135deg) translateY(-50%);
+  }
+  .custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0%;
+    right: 0;
+    width: 100%;
+  
+    margin: 10px 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /*  box-shadow: 0 2px 1px rgba(0, 0, 0, .1); */
+  
+    background: #fff;
+    transition: all 0.2s ease-in-out;
+  
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-15px);
+    border: 0;
+  }
+  .custom-select.opened .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(-8px);
+  
+    -webkit-box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+    box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+  }
+  .option-hover:before {
+    background: #f9f9f9;
+  }
+  .custom-option {
+    position: relative;
+    display: block;
+    padding: 0 22px;
+    font: 13px/1.5 "Roboto", sans-serif;
+    font-weight: 600;
+    color: #b5b5b5;
+    line-height: 47px;
+    cursor: pointer;
+    transition: all 0.05s ease-in-out;
+  }
+  .custom-option:first-of-type {
+    border-radius: 4px 4px 0 0;
+  
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .custom-option:last-of-type {
+    border-bottom: 0;
+    border-radius: 0 0 4px 4px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  .custom-option:hover,
+  .custom-option.selection {
+    color: #fff;
+    background-color: #49e2bb;
+  }
+  
+/**/
+
+
+
 @media screen and (max-width: 800px) {
     body {
         display: block;
     }
-
+    .out-of-stock {
+        border-left: 0px solid #E1E1E1;
+    }
     .sidebar {
         width: 100%;
         background-color: white;
@@ -199,7 +372,12 @@ select ,option{
         position: relative;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
     }
-
+    .product-img {
+        border-left: 0px solid #E1E1E1;
+        width: auto;
+        height: auto;
+    }
+    
     .right-section {
         margin-left: 0px;
     }

@@ -7,49 +7,45 @@
 body{
     font-family:'Montserrat',sans-serif;
 }
-.header a{
-text-align: left;
-text-decoration: none;
+.titel-top{
+    display: none;
 }
-.container{
+a{
+    text-align: left;
+    text-decoration: none;
+}
+.container {
     max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-   
+    display:flex;   
 }
-.image{
-    order:1;
-}
-.product{
-    display: flex;
-}
+
+ 
 .product img{
     max-width: 100%;
     height: auto;
     width: 500px;
     height: 500px;
+    transition: transform .2s; /* Animation */
+}
+.zoom{
+    transition: transform .2s; /* Animation */
 
 }
-
+.zoom img:hover{
+      transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
 
 .product-info{
-    order:2;
     max-width: 500px;
     height: auto;
-    padding-top: 76px;
-}
-.titel-top{
-    position: absolute;
-    margin-left: 500px;
-}
+ }
+
 .titel{
     margin-bottom: 35px;
     font-weight: 700;
     font-size: 25px;
     line-height :24px;
     color: #505050;
-
-    
 }
 .donne{
     font-weight: 400;
@@ -91,23 +87,80 @@ text-decoration: none;
     text-align: center;
      padding-left: 100px;
     padding-right: 100px;
-    margin-top: 65px;
+    margin-top: 25px;
 }
+
+
+.similar-products-title{
+    padding-top:60px;
+}
+.similar-products{
+    max-width: 1000px;
+    max-height: 500px;
+    display:flex; 
+    padding-top: 50px;;
+
+}
+
+/*.product-card-similar{
+    flex: 1 1 300px;
+    max-width: 300px;
+    box-sizing: border-box;
+    position: relative;
+}*/
+.product-img-similar {
+    max-width: 100%;
+    height: auto;
+    width: 360px;
+    height: 360px;
+    border-left: 3px solid #E1E1E1;
+}
+.product-img-similar img{
+   
+    width: 360px;
+    height: 360px;
+}
+
 @media screen and (max-width: 700px) {
     body {
         display: block;
     }
+    
     .container{
-        flex-direction: row;
+        display: block;
+
     }
     .image{
-        order: 1;
         width: 100%;
         height:auto;
     }
     .product-info{
-        order: 2;
+         width: 100%;
+    }
+    .product img{
+        max-width: 100%;
+        height: auto;
+    }
+    .button-kaufen{
         width: 100%;
+        }
+    .titel-product{
+        display: none;
+    }
+    .titel-top{
+        display:block;
+    }
+    .similar-products-title{
+        padding-top:60px;
+    }
+    .similar-products{
+        display: block;
+ 
+
+    }
+    .product-img-similar{
+        width: 100%;
+        height:auto;
     }
 
 }

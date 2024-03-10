@@ -93,22 +93,26 @@
 
         //lagerbestand
         if($productdetaille['Lagerbestand']==7){
-            $lagerbestand = '<H1 class="product-donne"> Nur noch 7 Stück Auf Lager  </H1>'; 
+             $lagerbestand = '<h1 class="product-donne"> Nur noch 7 Stück Auf Lager  </h1>'; 
           }
         else if($productdetaille['Lagerbestand']<7 && $productdetaille['Lagerbestand']!=0)  {
-            $lagerbestand = '<H1 class="product-donne"> weniger als 7 Stück Auf Lager   </H1>'; 
-
-
+             $lagerbestand = '<h1 class="product-donne"> weniger als 7 Stück Auf Lager   </h1>'; 
         }else if($productdetaille['Lagerbestand']>7){
-            $lagerbestand = '<H1 class="product-donne"> Auf Lager  </H1>'; 
-
-
+             $lagerbestand = '<h1 class="product-donne"> Auf Lager  </h1>'; 
         } 
         else{
-            $lagerbestand = '<H1 class="product-donne-red"> AKtuell nicht auf Lager !   </H1>'; 
-
-
+             $lagerbestand = '<h1 class="product-donne-red"> AKtuell nicht auf Lager !   </h1>'; 
           }
+
+        //similaire produits
+        $sql="SELECT DISTINCT p.*
+        FROM Produkte p
+        JOIN ProdukteKategory pk1 ON p.ProduktID = pk1.ProduktID
+        JOIN ProdukteKategory pk2 ON pk1.KategorieID = pk2.KategorieID
+        WHERE pk2.ProduktID = ".$_GET['productdetaille']." AND p.ProduktID !=".$_GET['productdetaille']."   limit 5 ;";
+        $result_similair = $conn->query($sql);
+         
+        
 
     
     }
