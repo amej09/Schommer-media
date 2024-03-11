@@ -109,7 +109,7 @@
         FROM Produkte p
         JOIN ProdukteKategory pk1 ON p.ProduktID = pk1.ProduktID
         JOIN ProdukteKategory pk2 ON pk1.KategorieID = pk2.KategorieID
-        WHERE pk2.ProduktID = ".$_GET['productdetaille']." AND p.ProduktID !=".$_GET['productdetaille']."   limit 5 ;";
+        WHERE pk2.ProduktID = ".$_GET['productdetaille']." AND p.ProduktID !=".$_GET['productdetaille']."  AND p.Lagerbestand >=7  limit 5 ;";
         $result_similair = $conn->query($sql);
          
         

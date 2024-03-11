@@ -17,7 +17,7 @@ require 'functions.php';
 </head>
 <body>
 
-  <div class="header donne"><a href="index.php" > < zurück</a></div>
+  <div class="header donne"><a href="index.php" > <img   class="rotate90" src="../images/grafiken/pfeil.png" /> zurück</a></div>
   <?php 
     if(isset($_GET['productdetaille']) && $_GET['productdetaille']!="" ){
     ?>
@@ -27,8 +27,10 @@ require 'functions.php';
 
   <div class="container product">
           <div class="image zoom">
-          
+        
           <img src="../images/alle_produkte/<?php echo $productdetaille['Dateiname']; ?>" alt="<?php echo $productdetaille['Titel']; ?>">          </div>       
+        
+
           <div class="product-info">
           <p class="titel-product titel"><?php echo $productdetaille['Titel']; ?></p>
 

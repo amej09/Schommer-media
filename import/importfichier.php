@@ -3,55 +3,51 @@
 
 require 'import.php';
 
-// Define the directory where you want to save the uploaded files
+// Definieren Sie das Verzeichnis, in dem Sie die hochgeladenen Dateien speichern möchten
 $uploadDir = 'uploads/';
 
-// Check if the request method is POST
+// Überprüfen Sie, ob die Anfragemethode POST ist
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if a file has been uploaded
+
+    // Überprüfen Sie, ob eine Datei hochgeladen wurde
     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-        // Process the uploaded file
+
+        // Verarbeiten Sie die hochgeladene Datei
         $uploadedFile = $_FILES['file'];
 
-        // Create the uploads directory if it doesn't exist
+        // Erstellen Sie das Upload-Verzeichnis, wenn es nicht vorhanden ist
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
 
-        // Generate a unique filename to avoid overwriting existing files
+        // Generieren Sie einen eindeutigen Dateinamen, um das Überschreiben vorhandener Dateien zu vermeiden
         $uniqueFilename = uniqid('file_') . '_' . $uploadedFile['name'];
 
-        // Move the uploaded file to the specified directory
+        // Verschieben Sie die hochgeladene Datei in das angegebene Verzeichnis
         $destination = $uploadDir . $uniqueFilename;
+
         if (move_uploaded_file($uploadedFile['tmp_name'], $destination)) {
-            // Provide feedback or redirect as necessary
+
+            // Geben Sie Feedback aus oder leiten Sie bei Bedarf weiter
             
             importCSV($conn, $destination);
-            // Rediriger vers index.php
+            // Weiterleiten zu index.php
+
             header("Location: index.php");
-            exit; // Assurez-vous de terminer l'exécution du script après la redirection
-            echo '<script>alert("Importation réussie!");</script>';
+            
+            exit; // Stellen Sie sicher, dass die Ausführung des Skripts nach der Weiterleitung beendet wird
+            //echo 'Import erfolgreich!';
 
-            //echo "File uploaded successfully! Saved as: " . $uniqueFilename;
-        } else {
-            // Error moving the file
-            echo '<script>alert("Erreur : Impossible de déplacer le fichier téléchargé.");</script>';
-
-            //echo "Error: Unable to move the uploaded file.";
+         } else {
+            // Fehler beim Verschieben der Datei
+           // echo ' Fehler: Die hochgeladene Datei konnte nicht verschoben werden. ';
         }
     } else {
-        // No file uploaded or an error occurred
-        echo "Error: Please select a file to upload.";
-        echo '<script>alert("Error: Please select a file to upload.");</script>';
-
+         //echo "Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.";
     }
-} else {
-    // Invalid request method
-    http_response_code(405); // Method Not Allowed
-    //echo "Error: Invalid request method.";
-    echo '<script>alert("Error: Invalid request method.");</script>';
-
-    
+} else { 
+    http_response_code(405); 
+    //echo 'Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.';
 }
 
 ?>

@@ -18,6 +18,12 @@ a{
     max-width: 1000px;
     display:flex;   
 }
+ .rotate90 {
+    transform: rotate(90deg);
+   transition: transform 0.3s ease;  
+   width: 22px;
+  height: auto;
+}
 
  
 .product img{

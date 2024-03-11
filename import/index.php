@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Import Products</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Produkte importieren</title>
+    <link rel="stylesheet" href="../css/import.css">
 </head>
 <body>
 <div class="container">
-        <h1>CSV File Import</h1>
+        <h1>CSV-Dateiimport</h1>
         <form action="importfichier.php" method="post" enctype="multipart/form-data">
-            <label for="file">Choose a CSV file:</label>
+            <label for="file">Wählen Sie eine CSV-Datei:</label>
             <input type="file" name="file" id="file" accept=".csv">
-            <button type="submit">Import</button>
+            <button type="submit">Importieren</button>
         </form>
     </div>
 </body>

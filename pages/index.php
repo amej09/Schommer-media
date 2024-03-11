@@ -6,6 +6,7 @@ require 'functions.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,9 +14,10 @@ require 'functions.php';
     <link rel="stylesheet" href="../css/style.css">
     <link href="font/Montserrat/Montserrat-Regular.ttf" rel="stylesheet">
     <link href="font/Montserrat/Montserrat-Bold.ttf" rel="stylesheet">
+    
 </head>
+ 
 <body>
-
     <div class="sidebar">
 
         <form method="GET" id="form" name="Filter">
@@ -41,90 +43,108 @@ require 'functions.php';
 
 
              </div>
-             <div class="Preis custom-select">
-
-                <h2 class="donne-green" >Preis</H2>
-                <select name="price-filter" id="potencial" class="custom-select sources" placeholder="Preisspanne wählen"  class="donne" onchange="submit()">
-                <option value="0" <?= (( $_GET['price-filter'] ?? '') == '0' ) ? "selected" :  "" ?>>Preisspanne wählen</option>
-                <option value="1" <?= ( ( $_GET['price-filter'] ?? '') == '1' ) ? "selected" :  "" ?>>0 $ - 50 $</option>
-                <option value="2" <?= ( ( $_GET['price-filter'] ?? '') == '2' ) ? "selected" :  "" ?>>50 $ - 100 $</option>
-                <option value="3" <?= (( $_GET['price-filter'] ?? '') == '3' ) ? "selected" :  "" ?>>100 $ - 200 $</option>
-                <option value="4" <?= (( $_GET['price-filter'] ?? '') == '4' ) ? "selected" :  "" ?>>200 $ und mehr</option>
-            </select>
-            <span class="custom-select-trigger"></span>
+         
+           
+            <div class="dropdown Preis">
+            <button class="dropbtn">Preisspanne wählen 
+            <span><img id="arrow" class="flip" src="../images/grafiken/pfeil.png" /></span>
+            </button>
+            <div class="dropdown-content">
+                
+                <input type="hidden" value="0" name="price-filter"/>
+                <a  onclick="price_filter(0)" >Preisspanne wählen</a>
+                <a  onclick="price_filter(1)" >0 $ - 50 $</a>
+                <a  onclick="price_filter(2)" >50 $ - 100 $</a>
+                <a  onclick="price_filter(3)" >100 $ - 200 $</a>
+                <a  onclick="price_filter(4)" >200 $ und mehr</a>
+              
             </div>
-
-
+            </div>
+                  
+            
         </form>
         
     </div>
 
     <div class="right-section">
-                <div class="product-cards">
-                <?php
-                    // Afficher les produits
-                    while ($row = $result->fetch_assoc()) { ?>
-                        
-                        <a href="product-detaille.php?productdetaille=<?php echo $row['ProduktID']; ?>">
-                        <div class="product-card">
-                            <?php if ($row['Lagerbestand'] == 0){ ?>
-                                <div class="product-info">
-                                    <h1 class="product-title"><?php echo $row['Titel']; ?></h1>
-                                    <h2 class="donne-green product-price"><?php echo $row['Preis']; ?> €</h2>
-                                </div>
-                                <div class="out-of-stock zoom">
-                                    <img src="../images/alle_produkte/<?php echo $row['Dateiname']; ?>" alt="<?php echo $row['Titel']; ?>">
-                                </div>
-                                <h2 class="out-of-stock-text">nicht mehr <br> auf Lager!</h2>
-                            <?php }else {?>
-                                <div class="product-info">
-                                    <h1 class="product-title"><?php echo $row['Titel']; ?></h1>
-                                    <h2 class="donne-green product-price"><?php echo $row['Preis']; ?> €</h2>
-                                </div>
-                                <div class="product-img zoom">
-                                    <img class="product-image" src="../images/alle_produkte/<?php echo $row['Dateiname']; ?>" alt="<?php echo $row['Titel']; ?>">
-                                </div>
-                            <?php }?>
-                        </div>
-                    </a>
-                   <?php }
-                ?>
-            </div>
-
-
-        <div class=" pagination">
+        <?php  if($result->num_rows == 0){?>
+         <div class="notfound " >Nicht gefundene Produkte</div>    
+        <?php }?> 
+            <div class="product-cards">
             <?php
-                $previousPage = ($page > 1) ? $page - 1 : 1;
-                $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
+                // Afficher les produits
+                while ($row = $result->fetch_assoc()) { ?>
+                    
+                    <a href="product-detaille.php?productdetaille=<?php echo $row['ProduktID']; ?>">
+                    <div class="product-card">
+                        <?php if ($row['Lagerbestand'] == 0){ ?>
+                            <div class="product-info">
+                                <h1 class="product-title"><?php echo $row['Titel']; ?></h1>
+                                <h2 class="donne-green product-price"><?php echo $row['Preis']; ?> €</h2>
+                            </div>
+                            <div class="out-of-stock zoom">
+                                <img src="../images/alle_produkte/<?php echo $row['Dateiname']; ?>" alt="<?php echo $row['Titel']; ?>">
+                            </div>
+                            <h2 class="out-of-stock-text">nicht mehr <br> auf Lager!</h2>
+                        <?php }else {?>
+                            <div class="product-info">
+                                <h1 class="product-title"><?php echo $row['Titel']; ?></h1>
+                                <h2 class="donne-green product-price"><?php echo $row['Preis']; ?> €</h2>
+                            </div>
+                            <div class="product-img zoom">
+                                <img class="product-image" src="../images/alle_produkte/<?php echo $row['Dateiname']; ?>" alt="<?php echo $row['Titel']; ?>">
+                            </div>
+                        <?php }?>
+                    </div>
+                </a>
+                <?php }
+
+
             ?>
-            
-            <?php if ($page > 1) : ?>
+            </div>
+            <div class=" pagination">
                 <?php
-                $previousLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $previousPage : '?page=' . $previousPage;
+                    $previousPage = ($page > 1) ? $page - 1 : 1;
+                    $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
                 ?>
-                <a href="<?= $previousLink; ?>"><</a>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
-                <?php if (isset($_GET['search']) || isset($_GET['Kategory'])) : ?>
-                    <a href="<?= $_SERVER['REQUEST_URI'] ?>&page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
-                <?php else : ?>
-                    <a href="?page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                
+                <?php if ($page > 1) : ?>
+                    <?php
+                
+                $previousLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $previousPage : '?page=' . $previousPage;        
+                    ?>
+                    <a href="<?= $previousLink; ?>"><</a>
                 <?php endif; ?>
-            <?php endfor; ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                    <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
+                    <?php if (isset($_GET['search']) || isset($_GET['Kategory'])) : ?>
+                        <a href="<?= $_SERVER['REQUEST_URI'] ?>&page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                    <?php else : ?>
+                        <a href="?page=<?= $i; ?>" class="<?= $activeClass; ?>"><?= $i; ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
 
-            <?php if ($page < $totalPages) : ?>
-                <?php
-                $nextLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $nextPage : '?page=' . $nextPage;
-                ?>
-                <a href="<?= $nextLink; ?>">></a>
-            <?php endif; ?>
+                <?php if ($page < $totalPages) : ?>
+                    <?php
+                    $nextLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $nextPage : '?page=' . $nextPage;
+                    ?>
+                    <a href="<?= $nextLink; ?>">></a>
+                <?php endif; ?>
 
 
-        </div>
+            </div>
     </div>
+ 
     <script>
+       
+        function price_filter(price){
+            event.stopPropagation();
+            document.getElementById('form').elements['price-filter'].value = price;
+            document.getElementById('form').submit();
+
+
+        }
+            
         function submitsearch(){
             var searchValue =document.getElementById('form').elements['search'].value;
             if(searchValue.trim() !== ''){
@@ -136,77 +156,6 @@ require 'functions.php';
         function submit(){
              document.getElementById('form').submit();
         }
-
-
-
-                $(".custom-select").each(function() {
-        var classes = $(this).attr("class"),
-            id = $(this).attr("id"),
-            name = $(this).attr("name");
-        var template = '<div class="' + classes + '">';
-        template +=
-            '<span class="custom-select-trigger">' +
-            $(this).attr("placeholder") +
-            "</span>";
-        template += '<div class="custom-options">';
-        $(this)
-            .find("option")
-            .each(function() {
-            template +=
-                '<span class="custom-option ' +
-                $(this).attr("class") +
-                '" data-value="' +
-                $(this).attr("value") +
-                '">' +
-                $(this).html() +
-                "</span>";
-            });
-        template += "</div></div>";
-
-        $(this).wrap('<div class="custom-select-wrapper"></div>');
-        $(this).hide();
-        $(this).after(template);
-        });
-        $(".custom-option:first-of-type").hover(
-        function() {
-            $(this)
-            .parents(".custom-options")
-            .addClass("option-hover");
-        },
-        function() {
-            $(this)
-            .parents(".custom-options")
-            .removeClass("option-hover");
-        }
-        );
-        $(".custom-select-trigger").on("click", function() {
-        $("html").one("click", function() {
-            $(".custom-select").removeClass("opened");
-        });
-        $(this)
-            .parents(".custom-select")
-            .toggleClass("opened");
-        event.stopPropagation();
-        });
-        $(".custom-option").on("click", function() {
-        $(this)
-            .parents(".custom-select-wrapper")
-            .find("select")
-            .val($(this).data("value"));
-        $(this)
-            .parents(".custom-options")
-            .find(".custom-option")
-            .removeClass("selection");
-        $(this).addClass("selection");
-        $(this)
-            .parents(".custom-select")
-            .removeClass("opened");
-        $(this)
-            .parents(".custom-select")
-            .find(".custom-select-trigger")
-            .text($(this).text());
-        });
-
         
     </script>
 </body>

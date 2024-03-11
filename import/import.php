@@ -1,33 +1,41 @@
 <?php
 
 include '../db.php';
-// Fonction pour ajouter une catégorie à la base de données
+
+
+// Funktion zum Hinzufügen einer Kategorie zur Datenbank
 function addCategory($conn, $categoryName) {
-    // Vérifier si la catégorie existe déjà
+
+    // Überprüfen, ob die Kategorie bereits existiert
     $checkSql = "SELECT KategorieID FROM Kategorie WHERE KategorieName = '$categoryName'";
     $result = $conn->query($checkSql);
 
     if ($result->num_rows > 0) {
-        // La catégorie existe déjà, retourner l'ID de la catégorie existante
+
+        // Die Kategorie existiert bereits, gib die ID der vorhandenen Kategorie zurück
         $row = $result->fetch_assoc();
         return $row['KategorieID'];
+
     } else {
-        // La catégorie n'existe pas, l'ajouter à la base de données
+        // Die Kategorie existiert nicht, füge sie zur Datenbank hinzu
         $insertSql = "INSERT INTO Kategorie (KategorieName) VALUES ('$categoryName')";
         $conn->query($insertSql);
         return $conn->insert_id;
     }
+
 }
 
  
-// Fonction pour ajouter un produit à la base de données
+// Funktion zum Hinzufügen eines Produkts zur Datenbank
 function addProduct($conn, $title, $price, $stock, $deliveryTime, $image_path) {
-    // Vérifier si la catégorie existe déjà
+
+    // Überprüfen, ob das Produkt bereits existiert
     $checkSql = "SELECT ProduktID FROM produkte WHERE Titel = '$title'";
     $result = $conn->query($checkSql);
 
     if ($result->num_rows > 0) {
-        // La catégorie existe déjà, retourner l'ID de la catégorie existante
+
+        // Das Produkt existiert bereits, gib die ID des vorhandenen Produkts zurück
         $row = $result->fetch_assoc();
         return $row['ProduktID'];
     } else {
@@ -38,41 +46,46 @@ function addProduct($conn, $title, $price, $stock, $deliveryTime, $image_path) {
     }
 
 }
+
 function addProductCategory($conn,$productID, $categoryID){
+
     $sql="INSERT INTO produktekategory(ProduktID,KategorieID) VALUES ($productID,$categoryID)";
     $conn->query($sql);
+
 }
-// Fonction pour importer les données du fichier CSV
-function importCSV($conn, $file_path)
-{
+
+// Funktion zum Importieren von Daten aus der CSV-Datei
+function importCSV($conn, $file_path){
     $csv_file = fopen($file_path, 'r');
 
-    // Utilisez une variable pour détecter la première ligne
+    // Verwenden Sie eine Variable, um die erste Zeile zu erkennen
     $is_first_line = true;
 
     if ($csv_file !== false) {
         while (($data = fgetcsv($csv_file, 1000, ';')) !== false) {
             $data= array_map("utf8_encode",$data);
-            // Ignorer la première ligne
+            // Die erste Zeile ignorieren
             if ($is_first_line) {
                 $is_first_line = false;
                 continue;
             }
 
-            // Ajoutez ici la logique pour insérer les données dans la base de données
+            // Fügen Sie hier die Logik zum Einfügen der Daten in die Datenbank ein
             $title = $data[0];
-            // Supprimer le point
+
+            // Punkt entfernen
             $prixSansPoint = str_replace('.', '', $data[1]);
 
-            // Convertir en nombre (virgule flottante)
+            // In Zahl konvertieren (Kommazahl)
             $price = floatval($prixSansPoint);
+            
            // $price = $data[1];
             $stock = intval($data[2]);
             $delivery_time = intval($data[3]);
             $category_name = $data[4];
             $image_path = $data[5];
 
-            // Appelez la fonction d'ajout de produit
+            // Rufen Sie die Funktion zum Hinzufügen des Produkts auf
             $category_id = addCategory($conn, $category_name);
             $product_id=addProduct($conn, $title, $price, $stock, $delivery_time, $image_path);
             addProductCategory($conn,$product_id,$category_id);
@@ -81,8 +94,4 @@ function importCSV($conn, $file_path)
         fclose($csv_file);
     }
 }
-
-
-
-
 ?>
