@@ -75,6 +75,7 @@ function importCSV($conn, $file_path){
 
             // Punkt entfernen
             $prixSansPoint = str_replace('.', '', $data[1]);
+            $prixSansPoint = str_replace(',', '.', $prixSansPoint);
 
             // In Zahl konvertieren (Kommazahl)
             $price = floatval($prixSansPoint);

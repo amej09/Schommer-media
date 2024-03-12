@@ -28,26 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (move_uploaded_file($uploadedFile['tmp_name'], $destination)) {
 
-            // Geben Sie Feedback aus oder leiten Sie bei Bedarf weiter
+            
             
             importCSV($conn, $destination);
             // Weiterleiten zu index.php
 
-            header("Location: index.php");
+            header("Location: ../index.php");
             
-            exit; // Stellen Sie sicher, dass die Ausführung des Skripts nach der Weiterleitung beendet wird
-            //echo 'Import erfolgreich!';
+            exit; 
 
          } else {
             // Fehler beim Verschieben der Datei
-           // echo ' Fehler: Die hochgeladene Datei konnte nicht verschoben werden. ';
+           echo ' Fehler: Die hochgeladene Datei konnte nicht verschoben werden. ';
         }
     } else {
-         //echo "Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.";
+         echo "Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.";
     }
 } else { 
     http_response_code(405); 
-    //echo 'Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.';
+    echo 'Fehler: Bitte wählen Sie eine Datei zum Hochladen aus.';
 }
 
 ?>

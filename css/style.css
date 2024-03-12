@@ -1,3 +1,12 @@
+@font-face {
+    font-family: MontserratBold;
+    src: url('../css/fonts/Montserrat/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: MontserratRegular;
+    src: url('../css/fonts/Montserrat/Montserrat-Regular.ttf');
+}
+    
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +16,7 @@
 body {
     display: flex;
     position: relative;
-    font-family:'Montserrat',sans-serif;
-
+ 
 }
 .notfound{
     display: flex;
@@ -19,12 +27,15 @@ body {
     font-size: 100px;
     line-height :70px;
     color: #505050;
+    font-family: 'MontserratBold';
+
 }
 .product-title{
     font-weight: 400;
     font-size: 25px;
     line-height :30px;
     color: #505050;
+    font-family: 'MontserratRegular';
 
     
 }
@@ -33,12 +44,15 @@ body {
     font-size: 16px;
     line-height :19px;
     color: #505050;
+    font-family: 'MontserratRegular';
+
 }
 .donne-green{
     font-weight: 700;
     font-size: 20px;
     line-height :24px;
     color: #AFD96F;
+    font-family: 'MontserratBold';
 }
 .search{
  border-color: #E1E1E1;
@@ -103,7 +117,7 @@ body {
 .Preis {
     margin-top: 35px;
 }
-.Preis  H2 {
+.Preis  h2 {
     color: #AFD96F;
     margin-bottom: 10px;
 }
@@ -178,13 +192,16 @@ a{
     padding: 5px 10px;
     color: #505050;
     border: 1px solid #E1E1E1;  
-      padding: 10px 10px;
+    padding: 10px 10px;
 
 }
-
+.pagination a:hover {
+    background-color: #AFD96F;
+}
 .pagination a.active {
     background-color: #AFD96F;
 }
+
 .out-of-stock {
     border-left: 3px solid #E1E1E1;
 
@@ -202,38 +219,28 @@ a{
     top:50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    font-family: 'MontserratBold',sans-serif;
+
 
 }
-select{
-    background-color: transparent;
-    border-color: transparent;
-    transition: color 0.3s; /* Animation de la couleur du texte */
-
-}
-option{
-    background-color: white;
-    border-color: white;
  
-}
 
 /* checkbox icon intergration*/
 
 input[type="checkbox"] {
-    display: none; /* Masquer la case à cocher par défaut */
+    display: none; /* Kontrollkästchen standardmäßig ausblenden */
 }
 
-/* Style de l'icône */
-label img {
+ label img {
     width: 15px;
     height: 15px;
-    /* Autres styles d'icône */
-}
+ }
 .category-name{
     margin-left: 10px;
 }
-/* Style de l'icône personnalisée lorsque la case à cocher est cochée */
+/* Benutzerdefinierter Symbolstil, wenn das Kontrollkästchen aktiviert ist */
 input[type="checkbox"]:checked + label .icon {
-    content: url("../images/grafiken/button_aktiv.svg"); /* Chemin vers l'icône active */
+    content: url("../images/grafiken/button_aktiv.svg"); /* link zum aktiven Symbol */
 }
 
 
@@ -252,13 +259,13 @@ input[type="checkbox"]:checked + label .icon {
     cursor: pointer;
   }
   
-  /* The container <div> - needed to position the dropdown content */
+  /* Der Container <div> – wird zum Positionieren des Dropdown-Inhalts benötigt */
   .dropdown {
     position: relative;
     display: inline-block;
   }
   
-  /* Dropdown Content (Hidden by Default) */
+  /* Dropdown-Inhalt (standardmäßig ausgeblendet)*/
   .dropdown-content {
     display: none;
     position: absolute;
@@ -268,7 +275,7 @@ input[type="checkbox"]:checked + label .icon {
     z-index: 1;
   }
   
-  /* Links inside the dropdown */
+  /* Links a im Dropdown */
   .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -276,12 +283,10 @@ input[type="checkbox"]:checked + label .icon {
     display: block;
   }
   
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {
-    display: block;
+    display: block; 
   }
   
   /* Change the background color of the dropdown button when the dropdown content is shown */

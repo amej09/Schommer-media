@@ -1,19 +1,17 @@
 <?php
+
 include '../db.php';
 require 'functions.php';
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Liste des Produits</title>
+    <title>Produktliste</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link href="font/Montserrat/Montserrat-Regular.ttf" rel="stylesheet">
-    <link href="font/Montserrat/Montserrat-Bold.ttf" rel="stylesheet">
     
 </head>
  
@@ -44,12 +42,12 @@ require 'functions.php';
 
              </div>
          
-           
             <div class="dropdown Preis">
+            <h2 class="donne-green">Preis</h2>
+
             <button class="dropbtn">Preisspanne wählen 
-            <span><img id="arrow" class="flip" src="../images/grafiken/pfeil.png" /></span>
-            </button>
-            <div class="dropdown-content">
+            <span><img id="arrow" class="flip" src="../images/grafiken/pfeil.png" /></span></button>
+            <div class="dropdown-content donne">
                 
                 <input type="hidden" value="0" name="price-filter"/>
                 <a  onclick="price_filter(0)" >Preisspanne wählen</a>
@@ -85,7 +83,7 @@ require 'functions.php';
                             <div class="out-of-stock zoom">
                                 <img src="../images/alle_produkte/<?php echo $row['Dateiname']; ?>" alt="<?php echo $row['Titel']; ?>">
                             </div>
-                            <h2 class="out-of-stock-text">nicht mehr <br> auf Lager!</h2>
+                            <h2 class="out-of-stock-text">ausverkauft</h2>
                         <?php }else {?>
                             <div class="product-info">
                                 <h1 class="product-title"><?php echo $row['Titel']; ?></h1>
@@ -102,7 +100,7 @@ require 'functions.php';
 
             ?>
             </div>
-            <div class=" pagination">
+            <div class=" pagination ">
                 <?php
                     $previousPage = ($page > 1) ? $page - 1 : 1;
                     $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
@@ -113,7 +111,7 @@ require 'functions.php';
                 
                 $previousLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $previousPage : '?page=' . $previousPage;        
                     ?>
-                    <a href="<?= $previousLink; ?>"><</a>
+                    <a href="<?= $previousLink; ?>"><<</a>
                 <?php endif; ?>
                 <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                     <?php $activeClass = ($i == $page) ? 'active' : ''; ?>
@@ -128,7 +126,7 @@ require 'functions.php';
                     <?php
                     $nextLink = isset($_GET['search']) || isset($_GET['Kategory']) ? $_SERVER['REQUEST_URI'] . '&page=' . $nextPage : '?page=' . $nextPage;
                     ?>
-                    <a href="<?= $nextLink; ?>">></a>
+                    <a href="<?= $nextLink; ?>">>></a>
                 <?php endif; ?>
 
 

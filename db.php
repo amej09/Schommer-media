@@ -1,6 +1,6 @@
 <?php
 // Replace these values with your actual database credentials
-$servername = "localhost";
+$servername = "localhost:4306";
 $username = "root";
 $password = "";
 $dbname = "db-projekt";

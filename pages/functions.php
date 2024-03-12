@@ -1,22 +1,25 @@
 <?php 
-  // Pagination
-  $limit = 6; // Nombre de produits par page
+  // pagination
+
+  // Anzahl der Produkte pro Seite
+  
+  $limit = 6; // Anzahl der Produkte pro Seite
   $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
   $offset = ($page - 1) * $limit;
    
-  // Requête pour récupérer les kategorys
-
+  // Abfrage zum Abrufen von Kategorien
   $sql = "SELECT * FROM kategorie  "; 
   $Allkategorys = $conn->query($sql);
 
 
     if(isset($_GET['search'] )|| isset($_GET['Kategory'])|| isset($_GET['price-filter'] )){
+
           $sql="SELECT DISTINCT p.* FROM produkte p  ";
-         //test POST  Kategoryes
+         //POST-Testkategorien
+
          if(isset($_GET['Kategory']) && $_GET['Kategory']!="" ){
+
             $kategorys=$_GET['Kategory'];
-            //echo '<pre>'; print_r($kategorys); echo '</pre>';
-            
             $sql.=" INNER JOIN produktekategory pk ON p.ProduktID = pk.ProduktID 
              WHERE pk.KategorieID IN (".implode(',', $kategorys).") ";
         
@@ -31,6 +34,7 @@
         }
         
         if(isset($_GET['price-filter']) && $_GET['price-filter']!="" ){
+
             $selectedPrice=$_GET['price-filter'];
 
             if ($selectedPrice == 0) {
@@ -47,7 +51,9 @@
             }
            
         }
+
         $sql1= $sql;
+
         $sql.="  LIMIT $offset, $limit ";
         $result = $conn->query($sql);
     
@@ -55,14 +61,21 @@
     
         $totalProducts = $result2->num_rows ;
         $totalPages = ceil($totalProducts / $limit);
-    }else{
-        // Requête pour récupérer les produits avec pagination
+
+    }
+    else
+    {
+
+        // Abfrage zum Abrufen von Produkten mit Paginierung
         $sql = "SELECT * FROM Produkte LIMIT $offset, $limit";
         $result = $conn->query($sql);
+
         $sql2 = "SELECT * FROM Produkte ";
         $result2 = $conn->query($sql2);
+
         $totalProducts = $result2->num_rows ;
         $totalPages = ceil($totalProducts / $limit);
+
     }
 
 
@@ -87,7 +100,7 @@
         
         // Formater la date pour l'affichage
         $formatter = new IntlDateFormatter('de_DE', IntlDateFormatter::FULL, IntlDateFormatter::NONE, 'Europe/Berlin', IntlDateFormatter::GREGORIAN, 'EEEE d MMMM');
-        $jourLivraison = $formatter->format($Heute->getTimestamp()); // Nom du jour de la semaine en allemand
+        $jourLivraison = $formatter->format($Heute->getTimestamp()); // Tag
         $lieferzeit=$jourLivraison ;
         
 
