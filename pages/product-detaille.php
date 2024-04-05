@@ -47,10 +47,11 @@ require 'functions.php';
   </div>    
   <?php }?>
   <p class="similar-products-title titel">Ähnliche Produkte</p>
-  <div class="similar-products" >
+  <div class="similar-products">
       <?php
-          // Produkte anzeigen
-          while ($row = $result_similair->fetch_assoc()) { ?>
+        // Produkte anzeigen
+        while ($row = $result_similair->fetch_assoc()) 
+        { ?>
               
               <a href="product-detaille.php?productdetaille=<?php echo $row['ProduktID']; ?>">
               <div class="product-card-similar">
@@ -65,7 +66,8 @@ require 'functions.php';
               
               </div>
           </a>
-          <?php }
+          <?php 
+        }
       ?>
   </div>
 

@@ -17,7 +17,7 @@
           $sql="SELECT DISTINCT p.* FROM produkte p  ";
          //POST-Testkategorien
 
-         if(isset($_GET['Kategory']) && $_GET['Kategory']!="" ){
+        if(isset($_GET['Kategory']) && $_GET['Kategory']!="" ){
 
             $kategorys=$_GET['Kategory'];
             $sql.=" INNER JOIN produktekategory pk ON p.ProduktID = pk.ProduktID 
@@ -60,7 +60,7 @@
         $result2 = $conn->query($sql1);
     
         $totalProducts = $result2->num_rows ;
-        $totalPages = ceil($totalProducts / $limit);
+        $totalPages = ceil($totalProducts / $limit); 
 
     }
     else
@@ -82,7 +82,7 @@
 
 
 
-    //page products detailles 
+    //page products detailles .php
     if(isset($_GET['productdetaille']) && $_GET['productdetaille']!="" ){
         $sql = "SELECT * FROM Produkte WHERE ProduktID=".$_GET['productdetaille'];
         

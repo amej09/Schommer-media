@@ -19,13 +19,14 @@ body {
  
 }
 .notfound{
+    
     display: flex;
     justify-content: center;
     align-items:center;
     height: 60vh;
     font-weight: 400;
     font-size: 100px;
-    line-height :70px;
+    line-height :100px;
     color: #505050;
     font-family: 'MontserratBold';
 
@@ -87,7 +88,7 @@ body {
     right: 20px;
     transform: translateY(-50%);
 }
-.categories  H2 {
+.categories  h2 {
     color: #AFD96F;
     margin-bottom: 10px;
 }
@@ -97,23 +98,26 @@ body {
     padding-top: 10px;}
 
  
-/*.categories input[type="checkbox"] {
-    margin-right: 10px;
-}*/
+/* checkbox icon intergration*/
 
-.categories input[type="checkbox"]::before {
-    display: block;
-    width: 10px;
-    height: 10px;
-    content: "";
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em #AFD96F;
+input[type="checkbox"] {
+    display: none; /* Kontrollkästchen standardmäßig ausblenden */
 }
 
-.categories input[type="checkbox"]:checked::before {
-    transform: scale(1);
+ label img {
+    width: 15px;
+    height: 15px;
+ }
+.category-name{
+    margin-left: 10px;
 }
+/* Benutzerdefinierter Symbolstil, wenn das Kontrollkästchen aktiviert ist */
+input[type="checkbox"]:checked + label .icon {
+    content: url("../images/grafiken/button_aktiv.svg"); /* link zum aktiven Symbol */
+}
+
+
+
 .Preis {
     margin-top: 35px;
 }
@@ -171,7 +175,7 @@ a{
 
 }
 .zoom img:hover{
-      transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      transform: scale(1.05); /* (105% zoom ) */
 }
 
  
@@ -225,25 +229,6 @@ a{
 }
  
 
-/* checkbox icon intergration*/
-
-input[type="checkbox"] {
-    display: none; /* Kontrollkästchen standardmäßig ausblenden */
-}
-
- label img {
-    width: 15px;
-    height: 15px;
- }
-.category-name{
-    margin-left: 10px;
-}
-/* Benutzerdefinierter Symbolstil, wenn das Kontrollkästchen aktiviert ist */
-input[type="checkbox"]:checked + label .icon {
-    content: url("../images/grafiken/button_aktiv.svg"); /* link zum aktiven Symbol */
-}
-
-
 
 
 
@@ -259,12 +244,7 @@ input[type="checkbox"]:checked + label .icon {
     cursor: pointer;
   }
   
-  /* Der Container <div> – wird zum Positionieren des Dropdown-Inhalts benötigt */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
+ 
   /* Dropdown-Inhalt (standardmäßig ausgeblendet)*/
   .dropdown-content {
     display: none;
@@ -322,5 +302,7 @@ input[type="checkbox"]:checked + label .icon {
     .right-section {
         margin-left: 0px;
     }
+    .notfound{
+        font-size: 40px;}
 }
 
